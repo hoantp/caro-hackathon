@@ -23,7 +23,7 @@ public class Minimax {
 
 	/**
 	 * Minimax algorithm with alpha-beta pruning.
-	 * @param  depth lookahead
+	 * @param  d lookahead
 	 * @param  myBest alpha
 	 * @param  theirBest beta
 	 * @return Object[0] contains (Double) score and Object[1] contains (String) move
@@ -53,7 +53,9 @@ public class Minimax {
 			Object[] x = { evaluate(board), moveList.get(0) };
 			return x;
 		}
+
 		bestScore = myBest;
+
 		while (moveList.size() > 0) {
 			Board newBoard = new Board(board);
 			String newMove = moveList.get(0);

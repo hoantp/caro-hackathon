@@ -1,5 +1,6 @@
 package gomoku;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -399,20 +400,53 @@ public class Board {
 		return ij[0] + " " + ij[1];
 	}
 
+
+	/**
+	 * Check if there is a threat from the opponent
+	 * @param pos
+	 * @param opp
+	 * @return
+	 */
+	String checkThreat(String pos, char opp) {
+		ArrayList<String> oppsPotentialMoves = lookAround(pos);
+		for (String m : oppsPotentialMoves) {
+			int[] realMove = parseMove(m);
+			Board tmpBoard = new Board(this);
+			tmpBoard.placeMove(opp, m, false);
+			char winner = tmpBoard.setWinner(opp, realMove);
+			if (opp == winner) return m;
+		}
+
+		return null;
+	}
+
 	/**
 	 * Print a nice board
 	 * @return String representation of board
 	 */
 	@Override
 	public String toString() {
-		String str = "";
+		String str = "\t ";
+		
+		for(int i = 0; i < n; i++) {
+			if (i < 10) {
+				str += i + "  ";
+			} else {
+				str += i + " ";
+			}
+		}
+		str += "\n";
+		
 		for (int i = 0; i < n; i++) {
+            str += i + "\t";
+
 			for (int j = 0; j < n; j++) {
-				str += board[i][j] + " ";
+				str += " " + board[i][j] + " ";
 			}
 			str += "\n";
 		}
 		return str;
 	}
+
 
 }
